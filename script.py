@@ -1,4 +1,3 @@
-# Python Modules 
 import pygame
 import sys 
 import random
@@ -10,38 +9,40 @@ class snake(object):
         self.positions = [((SCREEN_WIDTH / 2), (SCREEN_HEIGHT /2))]
         self.direction = random.choice([UP, DOWN, LEFT, RIGHT])
         self.color = (17, 24, 47)
+        self.score = 0
 
     def get_head_position(self):
         return self.positions[0]
- 
+
     def turn(self, point):
-        if self.length > 1 and (point[0] * -1, point[1] * -1) == self.direction:
+        if self.length > 1 and (point[0]*-1, point[1]*-1) == self.direction:
             return
         else:
             self.direction = point
-   
+
     def move(self):
         cur = self.get_head_position()
-        x, y = self.direction
-        new = ((cur[0] + (x*GRIDSIZE)) % SCREEN_WIDTH), (cur[1] + (y*GRIDSIZE)) % SCREEN_HEIGHT)
+        x,y = self.direction
+        new = (((cur[0]+(x*gridsize))%screen_width), (cur[1]+(y*gridsize))%screen_height)
         if len(self.positions) > 2 and new in self.positions[2:]:
             self.reset()
         else:
-            self.positions.insert(0, new)
-            if len(self.positons) > self.length:
+            self.positions.insert(0,new)
+            if len(self.positions) > self.length:
                 self.positions.pop()
-  
+
     def reset(self):
         self.length = 1
-        self.positons = [((SCREEN_WIDTH / 2), (SCREEN_HEIGHT /2))]
-        self.direction = random.choice([UP, DOWN, LEFT, RIGHT])
+        self.positions = [((screen_width/2), (screen_height/2))]
+        self.direction = random.choice([up, down, left, right])
+        self.score = 0
 
-    def draw(self, surface):
+    def draw(self,surface):
         for p in self.positions:
-            r = pygame.Rect((p[0], p[1], (GRIDSIZE, GRIDSIZE))
+            r = pygame.Rect((p[0], p[1]), (gridsize,gridsize))
             pygame.draw.rect(surface, self.color, r)
-            pygame.draw.rect(surface, (93, 216, 228), r, 1)
- 
+            pygame.draw.rect(surface, (93,216, 228), r, 1)
+
     def handle_keys(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -49,26 +50,26 @@ class snake(object):
                 sys.exit()
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
-                    self.turn(UP)
-                elif event.type == pygame.K_DOWN:
-                    self.turn(DOWN)
-                elif event.type == pygame.K_LEFT:
-                    self.turn(LEFT)
-                elif event.type == pygame.K_RIGHT:
-                    self.turn(RIGHT)
+                    self.turn(up)
+                elif event.key == pygame.K_DOWN:
+                    self.turn(down)
+                elif event.key == pygame.K_LEFT:
+                    self.turn(left)
+                elif event.key == pygame.K_RIGHT:
+                    self.turn(right)
 
 # defines food the snake eats
 class food(object):
     def __init__(self):
-        self.positon = (0, 0)
+        self.position = (0,0)
         self.color = (223, 163, 49)
         self.randomize_position()
 
     def randomize_position(self):
-        self.position = (random.randint(0, GRID_WIDTH-1) * GRIDSIZE, random.randint(0, GRID_HEIGHT-1) * GRIDSIZE)
+        self.position = (random.randint(0, grid_width-1)*gridsize, random.randint(0, grid_height-1)*gridsize)
 
     def draw(self, surface):
-        r = pygame.Rect((self.position[0], self.position[1], (GRIDSIZE, GRIDSIZE))
+        r = pygame.Rect((self.position[0], self.position[1]), (gridsize, gridsize))
         pygame.draw.rect(surface, self.color, r)
         pygame.draw.rect(surface, (93, 216, 228), r, 1)
 
@@ -96,35 +97,36 @@ LEFT = (-1, 0)
 RIGHT = (1, 0)
 
 # defines the main game loop
-def main ():
+def main():
     pygame.init()
 
     clock = pygame.time.Clock()
-    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), 0, 32)
+    screen = pygame.display.set_mode((screen_width, screen_height), 0, 32)
 
     surface = pygame.Surface(screen.get_size())
     surface = surface.convert()
     drawGrid(surface)
 
-    snake = snake ()
-    food = food ()
+    snake = Snake()
+    food = Food()
+
+    myfont = pygame.font.SysFont("monospace",16)
 
 # defines the score method 
-score = 0
-    while (True)
+    while (True):
         clock.tick(10)
         snake.handle_keys()
         drawGrid(surface)
         snake.move()
         if snake.get_head_position() == food.position:
-            snake.lenght += 1
-            score += 1
+            snake.length += 1
+            snake.score += 1
             food.randomize_position()
         snake.draw(surface)
         food.draw(surface)
-        screen.blit(surface, (0, 0))
-        text = myfont.render("Score {0}".formate(score), 1, (0, 0, 0))
-        screen.blit(text, (5, 10))
+        screen.blit(surface, (0,0))
+        text = myfont.render("Score {0}".format(snake.score), 1, (0,0,0))
+        screen.blit(text, (5,10))
         pygame.display.update()
 
 main()
