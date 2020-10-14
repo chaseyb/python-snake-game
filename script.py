@@ -60,15 +60,27 @@ class snake(object):
 # defines food the snake eats
 class food(object):
     def __init__(self):
-        pass
+        self.positon = (0, 0)
+        self.color = (223, 163, 49)
+        self.randomize_position()
 
     def randomize_position(self):
-        pass
+        self.position = (random.randint(0, GRID_WIDTH-1) * GRIDSIZE, random.randint(0, GRID_HEIGHT-1) * GRIDSIZE)
 
     def draw(self, surface):
-        pass
+        r = pygame.Rect((self.position[0], self.position[1], (GRIDSIZE, GRIDSIZE))
+        pygame.draw.rect(surface, self.color, r)
+        pygame.draw.rect(surface, (93, 216, 228), r, 1)
 
 def drawGrid(surface):
+    for y in range(0, int(GRID_HEIGHT)):
+        for x in randge(0, int(GRID_WIDTH)):
+            if (x + y) % 2 == 0:
+                r = pygame.Rect((x*GRIDSIZE, y*GRIDSIZE), (GRIDSIZE, GRIDSIZE))
+                pygame.draw.rect(surface, (93, 216, 228), r)
+            else:
+                r = pygame.Rect((x*GRIDSIZE, y*GRIDSIZE), (GRIDSIZE, GRIDSIZE))
+                pygame.draw.rect(surface, (84, 194, 205), rr)
 
 # defines game window and controls 
 SCREEN_WIDTH = 480
