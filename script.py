@@ -3,11 +3,11 @@ import sys
 import random
 
 # defines the snake 
-class snake(object):
+class Snake():
     def __init__(self):
         self.length = 1
-        self.positions = [((SCREEN_WIDTH / 2), (SCREEN_HEIGHT /2))]
-        self.direction = random.choice([UP, DOWN, LEFT, RIGHT])
+        self.positions = [((screen_width/2), (screen_height/2))]
+        self.direction = random.choice([up, down, left, right])
         self.color = (17, 24, 47)
         self.score = 0
 
@@ -59,7 +59,7 @@ class snake(object):
                     self.turn(right)
 
 # defines food the snake eats
-class food(object):
+class Food():
     def __init__(self):
         self.position = (0,0)
         self.color = (223, 163, 49)
@@ -74,27 +74,27 @@ class food(object):
         pygame.draw.rect(surface, (93, 216, 228), r, 1)
 
 def drawGrid(surface):
-    for y in range(0, int(GRID_HEIGHT)):
-        for x in randge(0, int(GRID_WIDTH)):
-            if (x + y) % 2 == 0:
-                r = pygame.Rect((x*GRIDSIZE, y*GRIDSIZE), (GRIDSIZE, GRIDSIZE))
-                pygame.draw.rect(surface, (93, 216, 228), r)
+    for y in range(0, int(grid_height)):
+        for x in range(0, int(grid_width)):
+            if (x+y)%2 == 0:
+                r = pygame.Rect((x*gridsize, y*gridsize), (gridsize,gridsize))
+                pygame.draw.rect(surface,(93,216,228), r)
             else:
-                r = pygame.Rect((x*GRIDSIZE, y*GRIDSIZE), (GRIDSIZE, GRIDSIZE))
-                pygame.draw.rect(surface, (84, 194, 205), rr)
+                rr = pygame.Rect((x*gridsize, y*gridsize), (gridsize,gridsize))
+                pygame.draw.rect(surface, (84,194,205), rr)
 
 # defines game window and controls 
-SCREEN_WIDTH = 480
-SCREEN_HEIGHT = 480
+screen_width = 480
+screen_height = 480
 
-GRIDSIZE = 20
-GRID_WIDTH = SCREEN_HEIGHT / GRIDSIZE
-GRID_HEIGHT = SCREEN_WIDTH / GRIDSIZE
+gridsize = 20
+grid_width = screen_width/gridsize
+grid_height = screen_height/gridsize
 
-UP = (0, -1)
-DOWN = (0, 1)
-LEFT = (-1, 0)
-RIGHT = (1, 0)
+up = (0,-1)
+down = (0,1)
+left = (-1,0)
+right = (1,0)
 
 # defines the main game loop
 def main():
