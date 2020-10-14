@@ -113,8 +113,18 @@ def main ():
 score = 0
     while (True)
         clock.tick(10)
-        #handle events
+        snake.handle_keys()
+        drawGrid(surface)
+        snake.move()
+        if snake.get_head_position() == food.position:
+            snake.lenght += 1
+            score += 1
+            food.randomize_position()
+        snake.draw(surface)
+        food.draw(surface)
         screen.blit(surface, (0, 0))
+        text = myfont.render("Score {0}".formate(score), 1, (0, 0, 0))
+        screen.blit(text, (5, 10))
         pygame.display.update()
 
 main()
