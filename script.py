@@ -2,6 +2,8 @@ import pygame
 import sys 
 import random
 
+pygame.display.set_caption('Snake game by Chaseyb')
+
 # defines the snake 
 class Snake():
     def __init__(self):
@@ -112,7 +114,6 @@ def main():
 
     myfont = pygame.font.SysFont("monospace",16)
 
-# defines the score method 
     while (True):
         clock.tick(10)
         snake.handle_keys()
